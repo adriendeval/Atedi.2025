@@ -23,24 +23,24 @@
         }
         .container-2-2 {
             width: 339px;
-            display: inline-block; 
+            display: inline-block;
             vertical-align: top;
         }
         .container-1-3 {
             width: 234px;
-            display: inline-block; 
+            display: inline-block;
             vertical-align: top;
         }
         .container-2-3 {
             width: 440px;
-            display: inline-block; 
+            display: inline-block;
             vertical-align: top;
         }
-        .w-100-title { 
+        .w-100-title {
             color: #FFFFFF;
             border: solid 1px #264653;
             background-color: #264653;
-            text-align: center; 
+            text-align: center;
         }
     </style>
 
@@ -140,28 +140,28 @@
                             <div class='w-100 text-center py-1'>Pas d'opération(s) effectuée(s)</div>
                         {% endif %}
                     </div>
-                </div> 
+                </div>
 
                 <div class='p-2 mt-3'>
                 <div class='header'>
                     <div align="center" class='text-center font-weight-bold' style="font-size: 18px;">Info CrystalDisk</div>
-                </div> 
+                </div>
 
                 <table width="100%" class='w-100'>
                     <tbody>
                         <tr>
-                            <td align="left" class='py-1 border-on px-2 text-center' width="100%"> Etat du Disk :                       
-                                <div align="center" class='checkbox-item'>[{{ "Correct" in intervention.interventionReport.diskState ? "X" : "_" }}]Correct</div> 
-                                <div align="center" class='checkbox-item'>[{{ "Prudence" in intervention.interventionReport.diskState ? "X" : "_" }}]Prudence</div> 
-                                <div align="center" class='checkbox-item'>[{{ "Mauvais" in intervention.interventionReport.diskState ? "X" : "_" }}]Mauvais</div> 
+                            <td align="left" class='py-1 border-on px-2 text-center' width="100%"> Etat du Disk :
+                                <div align="center" class='checkbox-item'>[{{ "Correct" in intervention.interventionReport.diskState ? "X" : "_" }}]Correct</div>
+                                <div align="center" class='checkbox-item'>[{{ "Prudence" in intervention.interventionReport.diskState ? "X" : "_" }}]Prudence</div>
+                                <div align="center" class='checkbox-item'>[{{ "Mauvais" in intervention.interventionReport.diskState ? "X" : "_" }}]Mauvais</div>
                             </td>
                         </tr>
                         <tr>
                             <td class='large-mb border-on px-2'><span class='font-weight-bold'>Temps de fonctionnement : {% if intervention.interventionReport.uptime is not null %}{{ intervention.interventionReport.uptime}}H{% else %}Non indiqué {% endif %}</span></td>
                         </tr>
                         <tr>
-                            <td class='large-mb border-on px-2'><span class='font-weight-bold'>Taux d'usure de la batterie : {% if intervention.interventionReport.batteryDegradation is not null %}{{ intervention.interventionReport.batteryDegradation}}%{% else %}Non indiqué {% endif %}</span></td>
-                        </tr>                        
+                            <td class='large-mb border-on px-2'><span class='font-weight-bold'>% usure batterie : {% if intervention.interventionReport.batteryDegradation is not null %}{{ intervention.interventionReport.batteryDegradation}}%{% else %}Non indiqué {% endif %}</span></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>

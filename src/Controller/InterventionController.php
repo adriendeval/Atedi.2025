@@ -315,6 +315,7 @@ class InterventionController extends AbstractController
             }
         }
 
+        dump($intervention);
         return $this->render('intervention/show.html.twig', [
             'intervention' => $intervention,
         ]);
