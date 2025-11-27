@@ -176,7 +176,7 @@
 						<tr>
 							<td align="center" class='py-1 border-on text-center' colspan="2">
 								[{{ "Matériel non infecté" in intervention.interventionReport.severity ? "X" : "_" }}]Matériel non infecté
-																[{{ "Matériel infecté" in intervention.interventionReport.severity ? "X" : "_" }}]Matériel infecté
+																								[{{ "Matériel infecté" in intervention.interventionReport.severity ? "X" : "_" }}]Matériel infecté
 
 							</td>
 						</tr>
@@ -205,18 +205,18 @@
 				<table width="100%" class='w-100'>
 					<tbody>
 						<tr>
-							<td class='large-mb border-on px-2'>
-								<span class='font-weight-bold'>Logiciel(s) installé(s) ou mis à jour :</span>
-							</td>
-						</tr>
-						<tr>
-							<td align="center" class='py-1 border-on px-2 text-center' width="100%">
-								{% for action in actions %}
-									<div class='checkbox-item'>[_]{{ action }}
-										{% if not loop.last %}.....
+							<td align="right" class='py-1 border-on px-2'>Logiciel(s) installé(s) ou mis à jour</td>
+							<td class='large-mb py-1 border-on px-2'>
+								{% if softwares|length > 0 %}
+									{% for software in softwares %}
+										{% if software.action != "Nettoyage" %}
+											<div class='w-100 list-ele pl-2'>{{ software }}
+												({{ software.action }})</div>
 										{% endif %}
-									</div>
-								{% endfor %}
+									{% endfor %}
+								{% else %}
+									<div class='w-100 text-center py-1'>Pas de logiciel(s) installé(s) ou mis à jour</div>
+								{% endif %}
 							</td>
 						</tr>
 					</tbody>
@@ -270,7 +270,7 @@
 								<td width="100%" align="center" class='py-1 border-on px-2 text-center' colspan='2'>
 									<div class='w-100 list-ele pl-2'>
 										[{{ "Installation de(s) mise(s) à jour Windows" in intervention.interventionReport.windowsInstall ? "X" : "_" }}]Installation des mises à jour Windows .....
-																				                                            [{{ "Activation Windows" in intervention.interventionReport.windowsInstall ? "X" : "_" }}]Activation Windows
+																														                                            [{{ "Activation Windows" in intervention.interventionReport.windowsInstall ? "X" : "_" }}]Activation Windows
 									</div>
 								</td>
 							</tr>
