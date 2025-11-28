@@ -85,7 +85,7 @@
 						<tbody>
 							<tr height="100%">
 								<td align="right" width="50%" class='border-on pr-2 text-center'>Client</td>
-								<td width="50%" class='border-on font-b  pl-1'>{{ intervention.client }}</td>
+								<td width="50%" class='border-on font-b font-20 pl-1'>{{ intervention.client }}</td>
 							</tr>
 							<tr>
 								<td align="right" class='border-on pr-2 text-center'>Téléphone</td>
@@ -102,12 +102,12 @@
 					<table width="100%" class='w-100'>
 						<tbody>
 							<tr width="100%">
-								<td align="right" width="50%" class='border-on text-center'>Dépôt</td>
+								<td align="right" width="50%" class='border-on text-center'>Date de dépôt</td>
 								<td width="50%" class='border-on px-1'>{{ intervention.depositDate ? intervention.depositDate|date('d/m/Y') : "" }}</td>
 							</tr>
 							<tr>
-								<td align="right" class='border-on text-center'>Restitution</td>
-								<td class='border-on font-b  px-1'>{{ intervention.returnDate ? intervention.returnDate|date('d/m/Y') : "" }}</td>
+								<td align="right" class='border-on text-center'>Date de restitution</td>
+								<td class='border-on font-b font-20 px-1'>{{ intervention.returnDate ? intervention.returnDate|date('d/m/Y') : "" }}</td>
 							</tr>
 						</tbody>
 					</table>
@@ -122,7 +122,7 @@
 					<tbody class="w-100" align="right">
 						<tr class="w-100 border-on">
 							<td width="50%" class='border-on text-center w-100'>Tâche(s)</td>
-							<td align="left" class='border-on font-b  px-1'>
+							<td align="left" class='border-on font-b font-20 px-1'>
 								{% for task in intervention.tasks %}
 									{{ task }}
 									{% if not loop.last %},
@@ -136,7 +136,7 @@
 						</tr>
 						<tr>
 							<td class='border-on text-center'>Équipement</td>
-							<td align="left" class='border-on font-b  px-1'>{{ intervention.equipment }}</td>
+							<td align="left" class='border-on font-b font-20 px-1'>{{ intervention.equipment }}</td>
 						</tr>
 						<tr>
 							<td class='border-on text-center'>Système d'exploitation</td>
@@ -157,11 +157,13 @@
 						</tr>
 						<tr>
 							<td class='border-on text-center'>Signature du client</td>
-							<td align="left" class='border-on px-1' valign="top"><br/><br/><br/></td>
+							<td align="left" class='border-on px-1' valign="top"></td>
 						</tr>
 					</tbody>
 				</table>
-			</div><br><br><br>
+			</div>
+
+			<br><br>
 
 			<div class='p-1 header'>
 				<div align="center" class='text-center font-weight-bold' style="font-size: 25px;">TRAITEMENT DE L'INTERVENTION N°{{ intervention.id }}</div>
@@ -171,28 +173,33 @@
 				<div class='header'>
 					<div align="center" class='text-center font-weight-bold' style="font-size: 18px;">Sévérité de l'infection</div>
 				</div>
-				<table class='w-100'>
+				<table width="100%" class='w-100'>
 					<tbody>
 						<tr>
 							<td align="center" class='py-1 border-on text-center' colspan="2">
-								[{{ "Matériel non infecté" in intervention.interventionReport.severity ? "X" : "_" }}]Matériel non infecté
-																								[{{ "Matériel infecté" in intervention.interventionReport.severity ? "X" : "_" }}]Matériel infecté
-
+								{{ intervention.interventionReport.severity}}
 							</td>
 						</tr>
 						<tr>
-							<td align="right" class='py-1 border-on px-2'>Logiciel de nettoyage utilisé(s)</td>
-							<td class='py-1 border-on px-2'>
+							<td width="33%" align="left" class='py-1 border-on px-2'>
+								<span class="font-weight-bold">Logiciel de nettoyage utilisé(s) :</span>
+							</td>
+							<td width="67%" class='py-1 border-on px-2'>
 								{% for software in cleaningSoftwares %}
-									<div class='checkbox-item'>[{{ software.title in intervention.interventionReport.softwareInterventionReports ? "X" : "_" }}]{{ software }}
-									</div>
+									{% if software.title in intervention.interventionReport.softwareInterventionReports %}
+										<div>
+											{{ software.title }}</div>
+									{% endif %}
 								{% endfor %}
 							</td>
 						</tr>
 						<tr>
-							<td class='mb-5 border-on px-2' colspan="2">
-								<span class='font-weight-bold'>Analyse interne :</span>
-							</td>
+							{% if intervention.interventionReport.internalAnalysis is not null %}
+								<td class='mb-5 border-on px-2' colspan="2">
+									<span class='font-weight-bold'>Analyse interne :
+									</span>
+									{{ intervention.interventionReport.internalAnalysis }}</td>
+							{% endif %}
 						</tr>
 					</tbody>
 				</table>
@@ -204,19 +211,24 @@
 				</div>
 				<table width="100%" class='w-100'>
 					<tbody>
+						<tr width="100%">
+							<td align="center" class='py-1 border-on text-center' colspan="2">
+								{% for action in actions %}
+									<div class='checkbox-item'>{{ action }}</div>
+								{% endfor %}
+							</td>
+						</tr>
 						<tr>
-							<td align="right" class='py-1 border-on px-2'>Logiciel(s) installé(s) ou mis à jour</td>
-							<td class='large-mb py-1 border-on px-2'>
-								{% if softwares|length > 0 %}
-									{% for software in softwares %}
-										{% if software.action != "Nettoyage" %}
-											<div class='w-100 list-ele pl-2'>{{ software }}
-												({{ software.action }})</div>
-										{% endif %}
-									{% endfor %}
-								{% else %}
-									<div class='w-100 text-center py-1'>Pas de logiciel(s) installé(s) ou mis à jour</div>
-								{% endif %}
+							<td width="34%" align="left" class='py-1 border-on px-2'>
+								<span class='font-weight-bold'>Logiciel(s) installé(s) ou mis à jour :</span>
+							</td>
+							<td width="60%" class='py-1 border-on px-2'>
+								{% for software in intervention.interventionReport.softwareInterventionReports %}
+									{% if software.action != "Nettoyage"%}
+										<div>{{ software }}
+											({{ software.action }})</div>
+									{% endif %}
+								{% endfor %}
 							</td>
 						</tr>
 					</tbody>
@@ -225,16 +237,14 @@
 
 			<div class='p-2 mt-3'>
 				<div class='header'>
-					<div align="center" class='text-center font-weight-bold' style="font-size: 18px;">Info CrystalDisk</div>
+					<div align="center" class='text-center font-weight-bold' style="font-size: 18px;">Info CrystalDisk & batterie</div>
 				</div>
 				<table width="100%" class='w-100'>
 					<tbody>
 						<tr>
 							<td align="left" class='py-1 border-on px-2 text-center' width="100%">
 								Etat du Disk :
-								<div align="center" class='checkbox-item'>[{{ "Correct" in intervention.interventionReport.diskState ? "X" : "_" }}]Correct</div>
-								<div align="center" class='checkbox-item'>[{{ "Prudence" in intervention.interventionReport.diskState ? "X" : "_" }}]Prudence</div>
-								<div align="center" class='checkbox-item'>[{{ "Mauvais" in intervention.interventionReport.diskState ? "X" : "_" }}]Mauvais</div>
+								<div align="center" class='checkbox-item'>{{intervention.interventionReport.diskState}}</div>
 							</td>
 						</tr>
 						<tr>
@@ -248,7 +258,7 @@
 						</tr>
 						<tr>
 							<td class='large-mb border-on px-2'>
-								<span class='font-weight-bold'>% usure batterie :
+								<span class='font-weight-bold'>Taux d'usure de la batterie :
 									{% if intervention.interventionReport.batteryDegradation is not null %}
 										{{ intervention.interventionReport.batteryDegradation}}%{% else %}Non indiqué
 									{% endif %}
@@ -269,9 +279,15 @@
 							<tr>
 								<td width="100%" align="center" class='py-1 border-on px-2 text-center' colspan='2'>
 									<div class='w-100 list-ele pl-2'>
-										[{{ "Installation de(s) mise(s) à jour Windows" in intervention.interventionReport.windowsInstall ? "X" : "_" }}]Installation des mises à jour Windows .....
-																														                                            [{{ "Activation Windows" in intervention.interventionReport.windowsInstall ? "X" : "_" }}]Activation Windows
-									</div>
+										{% for windows in intervention.interventionReport.windowsInstall %}
+											{{ windows }}
+											{% if windows == "Installation de(s) mise(s) à jour Windows" %}
+												:
+												{{ intervention.interventionReport.windowsVersion }}
+											{% endif %}
+											<br>
+										{% endfor %}
+									</td>
 								</td>
 							</tr>
 						</tbody>
@@ -279,10 +295,17 @@
 				</div>
 			{% endif %}
 
-			<div class='p-2 mt-3  page-break'>
+			<div class='p-2 mt-3 page-break'>
 				<div class='header'>
 					<div align="center" class='text-center font-weight-bold' style="font-size: 18px;">Observations</div>
 				</div>
+				<table width="100%" class='w-100'>
+					<tbody>
+						<tr>
+							<td align="left" class='py-1 border-on px-2 text-center' width="100%">{{ intervention.interventionReport.comment }}</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 
 
@@ -334,13 +357,6 @@
 							<tr>
 								<td align="center" class='py-1 border-on text-center' style="padding-top: 18px; padding-bottom: 14px;" colspan="2">{{ intervention.interventionReport.severity }}</td>
 							</tr>
-							{% if (intervention.interventionReport.severity) != "Matériel non infecté" %}
-								<tr>
-									<td align="center" class='py-2 border-on text-center' colspan="2">
-										[{{ "Virus" in intervention.interventionReport.severityProblem ? "X" : "_" }}]Virus
-									</td>
-								</tr>
-							{% endif %}
 						</tbody>
 					</table>
 				</div>
@@ -391,7 +407,7 @@
 
 				<div class='p-2 mt-3'>
 					<div class='header'>
-						<div align="center" class='text-center font-weight-bold' style="font-size: 18px;">Info CrystalDisk</div>
+						<div align="center" class='text-center font-weight-bold' style="font-size: 18px;">Info CrystalDisk & batterie</div>
 					</div>
 
 					<table width="100%" class='w-100'>
@@ -399,9 +415,7 @@
 							<tr>
 								<td align="left" class='py-1 border-on px-2 text-center' width="100%">
 									Etat du Disk :
-									<div align="center" class='checkbox-item'>[{{ "Correct" in intervention.interventionReport.diskState ? "X" : "_" }}]Correct</div>
-									<div align="center" class='checkbox-item'>[{{ "Prudence" in intervention.interventionReport.diskState ? "X" : "_" }}]Prudence</div>
-									<div align="center" class='checkbox-item'>[{{ "Mauvais" in intervention.interventionReport.diskState ? "X" : "_" }}]Mauvais</div>
+									<div align="center" class='checkbox-item'>{{ intervention.interventionReport.diskState }}</div>
 								</td>
 							</tr>
 							<tr>
@@ -415,7 +429,7 @@
 							</tr>
 							<tr>
 								<td class='large-mb border-on px-2'>
-									<span class='font-weight-bold'>% usure batterie :
+									<span class='font-weight-bold'>Taux d'usure de la batterie :
 										{% if intervention.interventionReport.batteryDegradation is not null %}
 											{{ intervention.interventionReport.batteryDegradation}}%{% else %}Non indiqué
 										{% endif %}
@@ -455,7 +469,7 @@
 						{% endfor %}
 						<tr>
 							<td class='list-ele text-right pr-2' colspan="2">
-								<span class=' font-weight-bold'>Total :
+								<span class='font-20 font-weight-bold'>Total :
 								</span>
 								<span class='font-25 font-weight-bold'>{{ intervention.totalPrice }}€</span>
 							</td>

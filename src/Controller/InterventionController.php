@@ -432,20 +432,20 @@ class InterventionController extends AbstractController
                         }
                     }
 
-                    // if ($request->request->has('cleaning-software')) {
-                    //     $cleaningSoftwares = $request->request->get('cleaning-software');
-                    //     foreach ( $cleaningSoftwares as $softwareId ) {
-                    //         $software = $sr->findOneById($softwareId);
-                    //         $softwareOperation = new SoftwareInterventionReport();
-                    //         $softwareOperation->setSoftware($software);
-                    //         $softwareOperation->setInterventionReport($interventionReport);
-                    //         $softwareOperation->setAction('Nettoyage');
-                    //         $em->persist($softwareOperation);
-                    //     }
-                    // }
+                    if ($request->request->has('cleaning-software')) {
+                        $cleaningSoftwares = $request->request->all('cleaning-software');
+                        foreach ( $cleaningSoftwares as $softwareId ) {
+                            $software = $sr->findOneById($softwareId);
+                            $softwareOperation = new SoftwareInterventionReport();
+                            $softwareOperation->setSoftware($software);
+                            $softwareOperation->setInterventionReport($interventionReport);
+                            $softwareOperation->setAction('Nettoyage');
+                            $em->persist($softwareOperation);
+                        }
+                    }
 
                     if ($request->request->has('severity-problem')) {
-                        $severityProblems = $request->request->get('severity-problem');
+                        $severityProblems = $request->request->all('severity-problem');
                         $interventionReport->setSeverityProblem($severityProblems);
                     }
 
@@ -485,14 +485,14 @@ class InterventionController extends AbstractController
                         }
                     }
 
-                    // if ($request->request->has('actions')) {
-                    //     $actions = $request->request->get('actions');
-                    //     foreach ( $actions as $action ) {
-                    //         $action = $ar->findOneById($action);
-                    //         $interventionReport->addAction($action);
-                    //         $em->persist($interventionReport);
-                    //     }
-                    // }
+                    if ($request->request->has('actions')) {
+                        $actions = $request->request->all   ('actions');
+                        foreach ( $actions as $action ) {
+                            $action = $ar->findOneById($action);
+                            $interventionReport->addAction($action);
+                            $em->persist($interventionReport);
+                        }
+                    }
 
                     $interventionReport->setStep($step + 1);
                     $em->persist($interventionReport);
@@ -559,7 +559,7 @@ class InterventionController extends AbstractController
                 if ($request->request->has('data')) {
 
                     if ($request->request->has('windows-install')) {
-                        $windowsInstalls = $request->request->get('windows-install');
+                        $windowsInstalls = $request->request->all('windows-install');
                         $interventionReport->setWindowsInstall($windowsInstalls);
                     }
 
@@ -630,14 +630,14 @@ class InterventionController extends AbstractController
                         }
                     }
 
-                    // if ($request->request->has('booklets')) {
-                    //     $booklets = $request->request->get('booklets');
-                    //     foreach ( $booklets as $booklet ) {
-                    //         $booklet = $br->findOneById($booklet);
-                    //         $interventionReport->addBooklet($booklet);
-                    //         $em->persist($interventionReport);
-                    //     }
-                    // }
+                    if ($request->request->has('booklets')) {
+                        $booklets = $request->request->all('booklets');
+                        foreach ( $booklets as $booklet ) {
+                            $booklet = $br->findOneById($booklet);
+                            $interventionReport->addBooklet($booklet);
+                            $em->persist($interventionReport);
+                        }
+                    }
 
                     $interventionReport->setStep($step + 1);
                     $em->persist($interventionReport);
