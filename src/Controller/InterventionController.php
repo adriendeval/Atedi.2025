@@ -265,6 +265,7 @@ class InterventionController extends AbstractController
 
                 case "both":
                     $cleaningSoftwares = $sr->findAllByType('Nettoyage');
+                    $installingUpdatingSoftwares = $sr->findAllByType('Installation/Mise à jour');
                     $actions = $ar->findAll();
 
                     // Configure Dompdf according to your needs
@@ -294,6 +295,7 @@ class InterventionController extends AbstractController
                         'technicians' => $technicians,
                         'intervention' => $intervention,
                         'cleaningSoftwares' => $cleaningSoftwares,
+                        'installingUpdatingSoftwares' => $installingUpdatingSoftwares,
                         'actions' => $actions,
                     ]);
 
@@ -315,6 +317,7 @@ class InterventionController extends AbstractController
             }
         }
 
+        dump($intervention);
         return $this->render('intervention/show.html.twig', [
             'intervention' => $intervention,
         ]);

@@ -108,11 +108,11 @@
 					<table width="100%" class='w-100'>
 						<tbody>
 							<tr>
-								<td class="border-on small-width text-center">Date de dépôt</td>
+								<td class="border-on small-width text-center">Dépôt</td>
 								<td class="border-on large-width px-1">{{ intervention.depositDate ? intervention.depositDate|date('d/m/Y') : "" }}</td>
 							</tr>
 							<tr>
-								<td class="border-on small-width text-center">Date de restitution</td>
+								<td class="border-on small-width text-center">Restitution</td>
 								<td class="border-on large-width font-b font-20 px-1">{{ intervention.returnDate ? intervention.returnDate|date('d/m/Y') : "" }}</td>
 							</tr>
 						</tbody>
@@ -225,12 +225,20 @@
 							</td>
 						</tr>
 						<tr>
-							<td class="border-on small-width">Taux d'usure de la batterie</td>
+							<td class="border-on small-width">% usure batterie</td>
 							<td class="border-on large-width"></td>
 						</tr>
 						<tr>
 							<td class="border-on small-width">Serveur de sauvegarde</td>
 							<td class="border-on large-width"></td>
+						</tr>
+						{# <tr>
+							<td class="border-on small-width">Montant estimatif des travaux (TTC)</td>
+							<td class="border-on large-width"></td>
+						</tr> #}
+						<tr>
+							<td class="border-on small-width">Signature du client</td>
+							<td class="border-on large-width"><br/><br/><br/></td>
 						</tr>
 					</tbody>
 				</table>
